@@ -155,13 +155,44 @@ footer{border-top:1px solid var(--rule);padding:62px 0 70px}
   nav .wrap{gap:10px;padding-top:14px;padding-bottom:14px}
   .navlinks{gap:14px 18px}
 }
-/* mobile timeline, standing in for the wide Gantt */
-.mtl{list-style:none;flex-direction:column;gap:13px}
-.mtl li{border-left:3px solid var(--blue);padding:1px 0 1px 14px}
-.mtl li.amber{border-left-color:#d97b1f}
-.mtl li b{display:block;font-size:15.5px;color:var(--ink);font-weight:650;letter-spacing:-.008em}
-.mtl li span{display:block;font-size:13.5px;color:var(--mute);margin-top:3px}
-.mtl-note{font-size:13.5px;color:var(--mute);margin-top:18px;padding-top:14px;border-top:1px solid var(--rule)}
+
+/* ---------- mobile versions of the two diagrams ----------
+   Not substitutes that say less: the same lanes, the same month spans, the
+   same five branches and their two capabilities each, laid out for a tall
+   narrow screen instead of a wide one. */
+
+/* programme map, as a vertical tree */
+.mm-hub{display:inline-block;background:var(--blue);color:#fff;font-weight:700;font-size:13px;
+  letter-spacing:.04em;padding:7px 18px;border-radius:999px;margin-bottom:4px}
+.mm-b{position:relative;padding:14px 0 14px 18px;margin-left:12px;border-left:2px solid var(--rule)}
+.mm-b::before{content:"";position:absolute;left:-6px;top:24px;width:10px;height:10px;border-radius:50%;
+  background:var(--rule)}
+.mm-b.blue{border-left-color:var(--blue-l)}  .mm-b.blue::before{background:var(--blue)}
+.mm-b.green{border-left-color:var(--green-l)} .mm-b.green::before{background:var(--green)}
+.mm-b.amber{border-left-color:var(--amber-l)} .mm-b.amber::before{background:#d97b1f}
+.mm-h b{display:block;font-size:16px;color:var(--ink);font-weight:650;letter-spacing:-.01em}
+.mm-h span{display:block;font-size:13px;color:var(--mute);margin-top:2px}
+.mm-l{display:flex;flex-direction:column;gap:6px;margin-top:10px}
+.mm-l span{font-size:13.5px;line-height:1.4;color:var(--body);background:#fff;
+  border:1px solid var(--rule);border-radius:8px;padding:7px 10px}
+.mm-l span.done{background:var(--green-f);border-color:var(--green-l);color:var(--green)}
+.mm-l span.build{background:var(--blue-f);border-color:var(--blue-l);color:var(--blue)}
+
+/* timeline, as proportional bars on a shared 0-12 month scale */
+.mg-scale{display:flex;justify-content:space-between;font-size:11.5px;font-weight:700;
+  color:var(--mute);letter-spacing:.06em;padding-bottom:6px;border-bottom:1px solid var(--rule)}
+.mg-lane{margin-top:16px}
+.mg-name{font-size:12px;font-weight:700;color:var(--ink);letter-spacing:.02em;margin-bottom:6px}
+.mg-track{position:relative;height:22px;border-radius:6px;background:#ece7de}
+.mg-track i{position:absolute;top:0;height:22px;border-radius:6px}
+.mg-track i.blue{background:var(--blue)} .mg-track i.amber{background:#d97b1f}
+.mg-key{font-size:12.5px;line-height:1.45;color:var(--mute);margin-top:7px}
+.mg-key b{color:var(--body);font-weight:650}
+.mg-marks{position:relative;height:26px;margin-top:14px;border-top:1px solid var(--rule);padding-top:4px}
+.mg-marks i{position:absolute;top:4px;transform:translateX(-50%);width:20px;height:20px;
+  background:var(--green);display:grid;place-items:center;rotate:45deg;border-radius:3px}
+.mg-marks i b{rotate:-45deg;color:#fff;font-size:11.5px;font-weight:700}
+.mg-note{font-size:12.5px;color:var(--mute);margin-top:10px}
 
 .mobile-only{display:none}
 @media(max-width:860px){
@@ -170,7 +201,7 @@ footer{border-top:1px solid var(--rule);padding:62px 0 70px}
   .scrollx{display:none}
   .desktop-figure{display:none}
   .mobile-only{display:block}
-  .mtl.mobile-only{display:flex}
+  .mm.mobile-only,.mg.mobile-only{display:block}
 }
 </style></head><body>
 
@@ -271,9 +302,21 @@ footer{border-top:1px solid var(--rule);padding:62px 0 70px}
       <div class="track" style="width:14.0%"><div class="fill g" style="width:100.0%"></div></div>
       <div class="rowfoot"><span>7% of budget</span><span>7 of 7 points delivered</span></div>
     </div></div>
-  <div class="figure desktop-figure" style="margin-top:46px">
+  <div class="figure" style="margin-top:46px"><div class="mm mobile-only">
+      <div class="mm-hub">PACT</div>
+      <div class="mm-b blue"><div class="mm-h"><b>Pooling service</b><span>50% of budget &middot; core built</span></div>
+        <div class="mm-l"><span class="done">Batching and inclusion proofs</span><span class="build">Durability and supervision</span></div></div>
+      <div class="mm-b amber"><div class="mm-h"><b>Holder tool v1.0</b><span>23% of budget &middot; scheduled</span></div>
+        <div class="mm-l"><span>Guided flow, no command line</span><span>Reproducible on three platforms</span></div></div>
+      <div class="mm-b green"><div class="mm-h"><b>Threat model</b><span>10% of budget &middot; published</span></div>
+        <div class="mm-l"><span class="done">What it protects, what it does not</span><span class="build">Independent review, month 8</span></div></div>
+      <div class="mm-b amber"><div class="mm-h"><b>Security documentation</b><span>10% of budget &middot; scheduled</span></div>
+        <div class="mm-l"><span>Written to be translated</span><span>For holders under surveillance</span></div></div>
+      <div class="mm-b green"><div class="mm-h"><b>Conformance suite</b><span>7% of budget &middot; published</span></div>
+        <div class="mm-l"><span class="done">51 conformance cases, independently derived</span><span class="done">Two implementations agree</span></div></div>
+    </div><div class="desktop-figure">
     <div class="scrollx"><svg viewBox="40 50 1320 800" width="100%" style="height:auto;display:block" xmlns="http://www.w3.org/2000/svg"><path d="M700,450 Q718.0,334.5 700,255" stroke="#2f5fb3" stroke-width="3" fill="none" opacity=".55"/><path d="M700,255 Q609.6656397448244,177.71717253382104 519,100" stroke="#adf0c7" stroke-width="2.5" fill="none"/><path d="M700,255 Q790.3343602551756,177.71717253382104 881,100" stroke="#c6dcff" stroke-width="2.5" fill="none"/><path d="M700,450 Q849.6737746810641,401.8708430484426 963,390" stroke="#a8550b" stroke-width="3" fill="none" opacity=".55"/><path d="M963,390 Q1039.8031749236713,305.35780863787016 1116,221" stroke="#e4e0d9" stroke-width="2.5" fill="none"/><path d="M963,390 Q1095.6328799133476,426.36214943510777 1228,463" stroke="#e4e0d9" stroke-width="2.5" fill="none"/><path d="M700,450 Q799.3788681798928,510.87915695155743 863,608" stroke="#0a7a35" stroke-width="3" fill="none" opacity=".55"/><path d="M863,608 Q1000.3442718431304,632.8890369971164 1138,658" stroke="#adf0c7" stroke-width="2.5" fill="none"/><path d="M863,608 Q854.1802065982788,707.6738323960847 846,808" stroke="#c6dcff" stroke-width="2.5" fill="none"/><path d="M700,450 Q636.6211318201072,510.87915695155743 537,608" stroke="#a8550b" stroke-width="3" fill="none" opacity=".55"/><path d="M537,608 Q545.8197934017213,707.6738323960847 554,808" stroke="#e4e0d9" stroke-width="2.5" fill="none"/><path d="M537,608 Q399.6557281568695,632.8890369971164 262,658" stroke="#e4e0d9" stroke-width="2.5" fill="none"/><path d="M700,450 Q586.3262253189359,401.8708430484427 437,390" stroke="#0a7a35" stroke-width="3" fill="none" opacity=".55"/><path d="M437,390 Q304.3671200866524,426.3621494351079 172,463" stroke="#adf0c7" stroke-width="2.5" fill="none"/><path d="M437,390 Q360.19682507632854,305.3578086378702 284,221" stroke="#adf0c7" stroke-width="2.5" fill="none"/><circle cx="700" cy="450" r="96" fill="#f0f5fd"/><circle cx="700" cy="450" r="72" fill="#2f5fb3"/><text x="700" y="459" text-anchor="middle" font-size="27" font-weight="700" fill="#fff">PACT</text><rect x="576" y="220" width="248" height="70" rx="10" fill="#c6dcff" stroke="#2f5fb3" stroke-width="2"/><text x="700" y="249" text-anchor="middle" font-size="16.5" font-weight="700" fill="#2f5fb3">Pooling service</text><text x="700" y="271" text-anchor="middle" font-size="12.5" fill="#2f5fb3">50% of budget · core built</text><rect x="412" y="76" width="214" height="48" rx="8" fill="#eaf9ef" stroke="#adf0c7" stroke-width="1.5"/><text x="519" y="96" text-anchor="middle" font-size="11.5" fill="#0a7a35">Batching and inclusion</text><text x="519" y="112" text-anchor="middle" font-size="11.5" fill="#0a7a35">proofs</text><rect x="774" y="76" width="214" height="48" rx="8" fill="#f0f5fd" stroke="#c6dcff" stroke-width="1.5"/><text x="881" y="96" text-anchor="middle" font-size="11.5" fill="#2f5fb3">Durability and</text><text x="881" y="112" text-anchor="middle" font-size="11.5" fill="#2f5fb3">supervision</text><rect x="839" y="355" width="248" height="70" rx="10" fill="#fff5ed" stroke="#f8d3af" stroke-width="2"/><text x="963" y="384" text-anchor="middle" font-size="16.5" font-weight="700" fill="#a8550b">Holder tool v1.0</text><text x="963" y="406" text-anchor="middle" font-size="12.5" fill="#a8550b">23% of budget · scheduled</text><rect x="1009" y="197" width="214" height="48" rx="8" fill="#ffffff" stroke="#e4e0d9" stroke-width="1.5"/><text x="1116" y="217" text-anchor="middle" font-size="11.5" fill="#5b6068">Guided flow, no command</text><text x="1116" y="233" text-anchor="middle" font-size="11.5" fill="#5b6068">line</text><rect x="1121" y="439" width="214" height="48" rx="8" fill="#ffffff" stroke="#e4e0d9" stroke-width="1.5"/><text x="1228" y="459" text-anchor="middle" font-size="11.5" fill="#5b6068">Reproducible on three</text><text x="1228" y="475" text-anchor="middle" font-size="11.5" fill="#5b6068">platforms</text><rect x="739" y="573" width="248" height="70" rx="10" fill="#adf0c7" stroke="#0a7a35" stroke-width="2"/><text x="863" y="602" text-anchor="middle" font-size="16.5" font-weight="700" fill="#0a7a35">Threat model</text><text x="863" y="624" text-anchor="middle" font-size="12.5" fill="#0a7a35">10% of budget · published</text><rect x="1031" y="634" width="214" height="48" rx="8" fill="#eaf9ef" stroke="#adf0c7" stroke-width="1.5"/><text x="1138" y="654" text-anchor="middle" font-size="11.5" fill="#0a7a35">What it protects, what</text><text x="1138" y="670" text-anchor="middle" font-size="11.5" fill="#0a7a35">it does not</text><rect x="739" y="784" width="214" height="48" rx="8" fill="#f0f5fd" stroke="#c6dcff" stroke-width="1.5"/><text x="846" y="804" text-anchor="middle" font-size="11.5" fill="#2f5fb3">Independent review,</text><text x="846" y="820" text-anchor="middle" font-size="11.5" fill="#2f5fb3">month 8</text><rect x="413" y="573" width="248" height="70" rx="10" fill="#fff5ed" stroke="#f8d3af" stroke-width="2"/><text x="537" y="602" text-anchor="middle" font-size="16.5" font-weight="700" fill="#a8550b">Security documentation</text><text x="537" y="624" text-anchor="middle" font-size="12.5" fill="#a8550b">10% of budget · scheduled</text><rect x="447" y="793" width="214" height="30" rx="8" fill="#ffffff" stroke="#e4e0d9" stroke-width="1.5"/><text x="554" y="812" text-anchor="middle" font-size="11.5" fill="#5b6068">Written to be translated</text><rect x="155" y="634" width="214" height="48" rx="8" fill="#ffffff" stroke="#e4e0d9" stroke-width="1.5"/><text x="262" y="654" text-anchor="middle" font-size="11.5" fill="#5b6068">For holders under</text><text x="262" y="670" text-anchor="middle" font-size="11.5" fill="#5b6068">surveillance</text><rect x="313" y="355" width="248" height="70" rx="10" fill="#adf0c7" stroke="#0a7a35" stroke-width="2"/><text x="437" y="384" text-anchor="middle" font-size="16.5" font-weight="700" fill="#0a7a35">Conformance suite</text><text x="437" y="406" text-anchor="middle" font-size="12.5" fill="#0a7a35">7% of budget · published</text><rect x="65" y="439" width="214" height="48" rx="8" fill="#eaf9ef" stroke="#adf0c7" stroke-width="1.5"/><text x="172" y="459" text-anchor="middle" font-size="11.5" fill="#0a7a35">51 conformance</text><text x="172" y="475" text-anchor="middle" font-size="11.5" fill="#0a7a35">cases, independently derived</text><rect x="177" y="197" width="214" height="48" rx="8" fill="#eaf9ef" stroke="#adf0c7" stroke-width="1.5"/><text x="284" y="217" text-anchor="middle" font-size="11.5" fill="#0a7a35">Two implementations</text><text x="284" y="233" text-anchor="middle" font-size="11.5" fill="#0a7a35">agree</text></svg></div>
-    <div class="figcap">The programme at a glance. Green is delivered, blue is in build, amber is proposed and scheduled.</div>
+    </div><div class="figcap">The programme at a glance. Green is delivered, blue is in build, amber is proposed and scheduled.</div>
   </div>
 </div></section>
 
@@ -281,14 +324,23 @@ footer{border-top:1px solid var(--rule);padding:62px 0 70px}
   <div class="shead"><div class="eyebrow">Delivery</div>
     <h2>Two build tracks in parallel, with assurance following the work it reviews.</h2>
     <p class="lede">Months run from grant start.</p></div>
-  <div class="figure"><ol class="mtl mobile-only">
-      <li><b>A &middot; Validate</b><span>Months 0 to 1</span></li>
-      <li><b>B &middot; Production hardening</b><span>Months 1 to 6</span></li>
-      <li class="amber"><b>D &middot; Holder tool v1.0</b><span>Months 2 to 9</span></li>
-      <li><b>C &middot; Independent security review</b><span>Months 5 to 8</span></li>
-      <li class="amber"><b>E &middot; Operational security guidance</b><span>Months 8 to 11</span></li>
-    </ol>
-    <p class="mtl-note mobile-only">The three success measures land at month 6, month 8, and at release.</p><div class="scrollx"><svg viewBox="0 0 1400 440" width="100%" style="height:auto;display:block" xmlns="http://www.w3.org/2000/svg"><text x="190" y="26" text-anchor="middle" font-size="12.5" font-weight="700" fill="#a9a49b">M0</text><text x="384" y="26" text-anchor="middle" font-size="12.5" font-weight="700" fill="#a9a49b">M2</text><line x1="384" y1="44" x2="384" y2="330" stroke="#e4e0d9" stroke-width="1.5"/><text x="578" y="26" text-anchor="middle" font-size="12.5" font-weight="700" fill="#a9a49b">M4</text><line x1="578" y1="44" x2="578" y2="330" stroke="#e4e0d9" stroke-width="1.5"/><text x="772" y="26" text-anchor="middle" font-size="12.5" font-weight="700" fill="#a9a49b">M6</text><line x1="772" y1="44" x2="772" y2="330" stroke="#e4e0d9" stroke-width="1.5"/><text x="967" y="26" text-anchor="middle" font-size="12.5" font-weight="700" fill="#a9a49b">M8</text><line x1="967" y1="44" x2="967" y2="330" stroke="#e4e0d9" stroke-width="1.5"/><text x="1161" y="26" text-anchor="middle" font-size="12.5" font-weight="700" fill="#a9a49b">M10</text><line x1="1161" y1="44" x2="1161" y2="330" stroke="#e4e0d9" stroke-width="1.5"/><text x="1355" y="26" text-anchor="middle" font-size="12.5" font-weight="700" fill="#a9a49b">M12</text><line x1="1355" y1="44" x2="1355" y2="330" stroke="#e4e0d9" stroke-width="1.5"/><line x1="0" y1="42" x2="1400" y2="42" stroke="#a9a49b" stroke-width="1.5"/><text x="0" y="94" font-size="13.5" font-weight="700" fill="#16181d">Pooling service</text><rect x="190" y="64" width="97" height="46" rx="9" fill="#2f5fb3"/><text x="239" y="93" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">A · Validate</text><rect x="287" y="64" width="485" height="46" rx="9" fill="#2f5fb3"/><text x="530" y="93" text-anchor="middle" font-size="14" font-weight="700" fill="#fff">B · Production hardening</text><text x="0" y="160" font-size="13.5" font-weight="700" fill="#16181d">Assurance</text><rect x="675" y="130" width="291" height="46" rx="9" fill="#2f5fb3"/><text x="821" y="159" text-anchor="middle" font-size="14" font-weight="700" fill="#fff">C · Independent security review</text><text x="0" y="226" font-size="13.5" font-weight="700" fill="#16181d">Holder tool</text><rect x="384" y="196" width="680" height="46" rx="9" fill="#d97b1f"/><text x="724" y="225" text-anchor="middle" font-size="14" font-weight="700" fill="#fff">D · Holder tool v1.0</text><text x="0" y="292" font-size="13.5" font-weight="700" fill="#16181d">Documentation</text><rect x="967" y="262" width="291" height="46" rx="9" fill="#d97b1f"/><text x="1112" y="291" text-anchor="middle" font-size="14" font-weight="700" fill="#fff">E · Operational security guidance</text><line x1="772" y1="330" x2="772" y2="339" stroke="#0a7a35" stroke-width="1.5"/><polygon points="772,339 792,358 772,377 754,358" fill="#0a7a35"/><text x="772" y="364" text-anchor="middle" font-size="15" font-weight="700" fill="#fff">1</text><line x1="967" y1="330" x2="967" y2="339" stroke="#0a7a35" stroke-width="1.5"/><polygon points="967,339 986,358 967,377 948,358" fill="#0a7a35"/><text x="967" y="364" text-anchor="middle" font-size="15" font-weight="700" fill="#fff">2</text><line x1="1064" y1="330" x2="1064" y2="339" stroke="#0a7a35" stroke-width="1.5"/><polygon points="1064,339 1083,358 1064,377 1045,358" fill="#0a7a35"/><text x="1064" y="364" text-anchor="middle" font-size="15" font-weight="700" fill="#fff">3</text><text x="772" y="406" text-anchor="middle" font-size="12.5" font-weight="700" fill="#0a7a35">Measure 1</text><text x="951" y="406" text-anchor="end" font-size="12.5" font-weight="700" fill="#0a7a35">Measure 2</text><text x="1080" y="406" text-anchor="start" font-size="12.5" font-weight="700" fill="#0a7a35">Measure 3</text></svg></div></div>
+  <div class="figure"><div class="mg mobile-only">
+      <div class="mg-scale"><span>M0</span><span>M3</span><span>M6</span><span>M9</span><span>M12</span></div>
+      <div class="mg-lane"><div class="mg-name">Pooling service</div>
+        <div class="mg-track"><i class="blue" style="left:0%;width:8.33%"></i><i class="blue" style="left:8.33%;width:41.67%"></i></div>
+        <div class="mg-key"><b>A &middot; Validate</b> months 0&ndash;1, then <b>B &middot; Production hardening</b> months 1&ndash;6</div></div>
+      <div class="mg-lane"><div class="mg-name">Assurance</div>
+        <div class="mg-track"><i class="blue" style="left:41.67%;width:25%"></i></div>
+        <div class="mg-key"><b>C &middot; Independent security review</b> months 5&ndash;8</div></div>
+      <div class="mg-lane"><div class="mg-name">Holder tool</div>
+        <div class="mg-track"><i class="amber" style="left:16.67%;width:58.33%"></i></div>
+        <div class="mg-key"><b>D &middot; Holder tool v1.0</b> months 2&ndash;9</div></div>
+      <div class="mg-lane"><div class="mg-name">Documentation</div>
+        <div class="mg-track"><i class="amber" style="left:66.67%;width:25%"></i></div>
+        <div class="mg-key"><b>E &middot; Operational security guidance</b> months 8&ndash;11</div></div>
+      <div class="mg-marks"><i style="left:50%"><b>1</b></i><i style="left:66.67%"><b>2</b></i><i style="left:75%"><b>3</b></i></div>
+      <div class="mg-note">Measure 1 at month 6, Measure 2 at month 8, Measure 3 at release.</div>
+    </div><div class="scrollx"><svg viewBox="0 0 1400 440" width="100%" style="height:auto;display:block" xmlns="http://www.w3.org/2000/svg"><text x="190" y="26" text-anchor="middle" font-size="12.5" font-weight="700" fill="#a9a49b">M0</text><text x="384" y="26" text-anchor="middle" font-size="12.5" font-weight="700" fill="#a9a49b">M2</text><line x1="384" y1="44" x2="384" y2="330" stroke="#e4e0d9" stroke-width="1.5"/><text x="578" y="26" text-anchor="middle" font-size="12.5" font-weight="700" fill="#a9a49b">M4</text><line x1="578" y1="44" x2="578" y2="330" stroke="#e4e0d9" stroke-width="1.5"/><text x="772" y="26" text-anchor="middle" font-size="12.5" font-weight="700" fill="#a9a49b">M6</text><line x1="772" y1="44" x2="772" y2="330" stroke="#e4e0d9" stroke-width="1.5"/><text x="967" y="26" text-anchor="middle" font-size="12.5" font-weight="700" fill="#a9a49b">M8</text><line x1="967" y1="44" x2="967" y2="330" stroke="#e4e0d9" stroke-width="1.5"/><text x="1161" y="26" text-anchor="middle" font-size="12.5" font-weight="700" fill="#a9a49b">M10</text><line x1="1161" y1="44" x2="1161" y2="330" stroke="#e4e0d9" stroke-width="1.5"/><text x="1355" y="26" text-anchor="middle" font-size="12.5" font-weight="700" fill="#a9a49b">M12</text><line x1="1355" y1="44" x2="1355" y2="330" stroke="#e4e0d9" stroke-width="1.5"/><line x1="0" y1="42" x2="1400" y2="42" stroke="#a9a49b" stroke-width="1.5"/><text x="0" y="94" font-size="13.5" font-weight="700" fill="#16181d">Pooling service</text><rect x="190" y="64" width="97" height="46" rx="9" fill="#2f5fb3"/><text x="239" y="93" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">A · Validate</text><rect x="287" y="64" width="485" height="46" rx="9" fill="#2f5fb3"/><text x="530" y="93" text-anchor="middle" font-size="14" font-weight="700" fill="#fff">B · Production hardening</text><text x="0" y="160" font-size="13.5" font-weight="700" fill="#16181d">Assurance</text><rect x="675" y="130" width="291" height="46" rx="9" fill="#2f5fb3"/><text x="821" y="159" text-anchor="middle" font-size="14" font-weight="700" fill="#fff">C · Independent security review</text><text x="0" y="226" font-size="13.5" font-weight="700" fill="#16181d">Holder tool</text><rect x="384" y="196" width="680" height="46" rx="9" fill="#d97b1f"/><text x="724" y="225" text-anchor="middle" font-size="14" font-weight="700" fill="#fff">D · Holder tool v1.0</text><text x="0" y="292" font-size="13.5" font-weight="700" fill="#16181d">Documentation</text><rect x="967" y="262" width="291" height="46" rx="9" fill="#d97b1f"/><text x="1112" y="291" text-anchor="middle" font-size="14" font-weight="700" fill="#fff">E · Operational security guidance</text><line x1="772" y1="330" x2="772" y2="339" stroke="#0a7a35" stroke-width="1.5"/><polygon points="772,339 792,358 772,377 754,358" fill="#0a7a35"/><text x="772" y="364" text-anchor="middle" font-size="15" font-weight="700" fill="#fff">1</text><line x1="967" y1="330" x2="967" y2="339" stroke="#0a7a35" stroke-width="1.5"/><polygon points="967,339 986,358 967,377 948,358" fill="#0a7a35"/><text x="967" y="364" text-anchor="middle" font-size="15" font-weight="700" fill="#fff">2</text><line x1="1064" y1="330" x2="1064" y2="339" stroke="#0a7a35" stroke-width="1.5"/><polygon points="1064,339 1083,358 1064,377 1045,358" fill="#0a7a35"/><text x="1064" y="364" text-anchor="middle" font-size="15" font-weight="700" fill="#fff">3</text><text x="772" y="406" text-anchor="middle" font-size="12.5" font-weight="700" fill="#0a7a35">Measure 1</text><text x="951" y="406" text-anchor="end" font-size="12.5" font-weight="700" fill="#0a7a35">Measure 2</text><text x="1080" y="406" text-anchor="start" font-size="12.5" font-weight="700" fill="#0a7a35">Measure 3</text></svg></div></div>
   <div class="g3" style="margin-top:34px">
     <div class="card g"><span class="k g">Measure 1 · Month 6</span><h4>Pooling service published, running, and reproducible from source by an independent party</h4>
       <p>Three conditions. Published is a release. Running means an unbroken sequence of sealed intervals a reader can inspect. Independently reproducible means someone who is not the author rebuilds from source and obtains the same artefact.</p></div>
