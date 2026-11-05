@@ -55,6 +55,17 @@ nav .wrap{display:flex;align-items:center;justify-content:space-between;height:6
 .chip-s span{display:block;font-size:14px;margin-top:7px;max-width:24ch}
 
 /* grids */
+.proof{margin-top:54px;background:var(--surface);border:1px solid var(--green-l);
+ border-radius:16px;padding:30px 34px}
+.proof .k{font-size:11px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--green)}
+.proof h3{margin:12px 0 10px;font-size:22px;max-width:40ch}
+.proof p{font-size:15.5px;line-height:1.55;max-width:84ch}
+.proof .mono{margin-top:18px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
+ font-size:12.5px;line-height:1.9;color:var(--body);word-break:break-all}
+.proof .mono b{color:var(--ink);font-weight:600}
+.proof .go{display:inline-block;margin-top:16px;font-size:14.5px;font-weight:650;color:var(--green);
+ text-decoration:none;border-bottom:1px solid var(--green-l);padding-bottom:2px}
+.proof .go:hover{border-color:var(--green)}
 .g3{display:grid;grid-template-columns:repeat(3,1fr);gap:26px}
 .g4{display:grid;grid-template-columns:repeat(4,1fr);gap:22px}
 @media(max-width:940px){.g3,.g4{grid-template-columns:1fr 1fr}}
@@ -128,6 +139,26 @@ footer{border-top:1px solid var(--rule);padding:62px 0 70px}
     <div class="chip-s"><b>40%</b><span>of the funded scope delivered before the grant round opens</span></div>
     <div class="chip-s"><b>180</b><span>automated checks and conformance vectors, all passing offline</span></div>
     <div class="chip-s"><b>MIT</b><span>fully open source, specified so others can reimplement it</span></div>
+  </div>
+
+  <div class="proof">
+    <span class="k">Verified on the Bitcoin blockchain</span>
+    <h3>The pooling service's first live submission is anchored in block 974,627.</h3>
+    <p>On 5 November 2026 the aggregator sealed a batch, routed it over Tor, and submitted its root
+    to public timestamping servers. Six minutes later it was committed to the Bitcoin chain. The batch
+    contained only padding, no member data, so the submission itself reveals nothing — which is the
+    property the design exists to provide.</p>
+    <p style="margin-top:12px"><b style="color:var(--ink)">Stated precisely:</b> the transaction's
+    <span style="font-family:ui-monospace,Menlo,monospace">OP_RETURN</span> carries the timestamping
+    calendar's aggregated root. The batch root sits inside that aggregation, and the proof file is the
+    path joining the two. That is how the scheme is designed to work, and it is what anyone verifying
+    the claim will find.</p>
+    <div class="mono">
+      <b>batch root</b>&nbsp; d979530902af98ca1a3fb9481175cc2d9250f92a790054f70b98e7db89067bec<br/>
+      <b>transaction</b>&nbsp; 3b0498b9de5573db3ae48efdaab52b0bc335b9082be2890d579f6b26aa273948<br/>
+      <b>block</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 974,627 &nbsp;·&nbsp; 2026-11-05 04:56:22 UTC
+    </div>
+    <a class="go" href="https://mempool.space/tx/3b0498b9de5573db3ae48efdaab52b0bc335b9082be2890d579f6b26aa273948">Check it on a block explorer &#8599;</a>
   </div>
 </div>
 
