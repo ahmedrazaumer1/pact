@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PACT — Quantum-sunset protection for Bitcoin holders who cannot move</title>
+<meta name="description" content="PACT lets holders of exposed-key Bitcoin addresses record control privately, without a transaction. Open source, MIT licensed. Programme overview for the Human Rights Foundation Bitcoin Development Fund.">
+<style>
+:root{color-scheme:light;
+--paper:#faf8f4;--surface:#fff;--ink:#15171c;--body:#585e68;--mute:#9a948a;--rule:#e8e3da;
+--blue:#2f5fb3;--blue-f:#eef3fb;--blue-l:#cfdef5;
+--green:#0a7a35;--green-f:#edf7f0;--green-l:#c3e8ce;
+--amber:#b45f0d;--amber-f:#fdf4ea;--amber-l:#f3dcba;
+--max:1180px}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--paper);color:var(--body);
+ font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,Helvetica,Arial,sans-serif;
+ font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased}
+.wrap{max-width:var(--max);margin:0 auto;padding:0 32px}
+a{color:inherit}
+h1,h2,h3,h4{color:var(--ink);letter-spacing:-.021em;line-height:1.12;font-weight:650}
+h1{font-size:clamp(38px,5.4vw,66px);letter-spacing:-.032em;line-height:1.04}
+h2{font-size:clamp(28px,3.4vw,42px)}
+h3{font-size:20px;letter-spacing:-.012em}
+h4{font-size:17.5px;letter-spacing:-.008em}
+.eyebrow{font-size:11.5px;font-weight:700;letter-spacing:.17em;text-transform:uppercase;color:var(--blue)}
+.lede{font-size:clamp(17px,1.5vw,21px);line-height:1.52;max-width:62ch}
+.muted{color:var(--mute)}
+section{padding:96px 0;border-top:1px solid var(--rule)}
+section:first-of-type{border-top:0}
+.shead{max-width:70ch;margin-bottom:54px}
+.shead h2{margin:14px 0 16px}
+
+/* nav */
+nav{position:sticky;top:0;z-index:50;background:rgba(250,248,244,.86);backdrop-filter:saturate(180%) blur(14px);border-bottom:1px solid var(--rule)}
+nav .wrap{display:flex;align-items:center;justify-content:space-between;height:62px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:700;color:var(--ink);text-decoration:none;letter-spacing:-.02em}
+.mark{width:26px;height:26px;border-radius:7px;background:var(--blue);color:#fff;display:grid;place-items:center;font-size:12px;font-weight:700}
+.navlinks{display:flex;gap:26px}
+.navlinks a{font-size:14.5px;text-decoration:none;color:var(--body);transition:color .15s}
+.navlinks a:hover{color:var(--ink)}
+@media(max-width:860px){.navlinks{display:none}}
+
+/* hero */
+.hero{padding:88px 0 80px}
+.hero h1{margin:20px 0 26px;max-width:17ch}
+.cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:36px}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:13px 22px;border-radius:999px;
+ font-size:15px;font-weight:600;text-decoration:none;border:1px solid var(--rule);background:var(--surface);color:var(--ink);transition:.15s}
+.btn:hover{border-color:var(--ink)}
+.btn.primary{background:var(--ink);color:#fff;border-color:var(--ink)}
+.btn.primary:hover{opacity:.88}
+.chips{display:flex;flex-wrap:wrap;gap:40px;margin-top:56px;padding-top:34px;border-top:1px solid var(--rule)}
+.chip-s b{display:block;font-size:30px;color:var(--ink);font-weight:700;letter-spacing:-.025em;line-height:1}
+.chip-s span{display:block;font-size:14px;margin-top:7px;max-width:24ch}
+
+/* grids */
+.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:26px}
+.g4{display:grid;grid-template-columns:repeat(4,1fr);gap:22px}
+@media(max-width:940px){.g3,.g4{grid-template-columns:1fr 1fr}}
+@media(max-width:620px){.g3,.g4{grid-template-columns:1fr}}
+.card{background:var(--surface);border:1px solid var(--rule);border-radius:16px;padding:28px}
+.card h3,.card h4{margin-bottom:10px}
+.card p{font-size:15.5px;line-height:1.55}
+.card .k{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;margin-bottom:12px;display:block}
+.k.b{color:var(--blue)}.k.g{color:var(--green)}.k.a{color:var(--amber)}
+.card.b{border-color:var(--blue-l)}.card.g{border-color:var(--green-l)}.card.a{border-color:var(--amber-l)}
+.ev{margin-top:18px;padding-top:14px;border-top:1px solid var(--rule);font-size:14px;font-weight:650;color:var(--blue)}
+.num{font-size:34px;font-weight:700;color:var(--blue);line-height:1;letter-spacing:-.03em;margin-bottom:14px}
+
+/* steps */
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border-top:1px solid var(--rule)}
+@media(max-width:940px){.steps{grid-template-columns:1fr 1fr}}
+@media(max-width:620px){.steps{grid-template-columns:1fr}}
+.step{padding:30px 28px 30px 0;border-right:1px solid var(--rule)}
+.step:last-child{border-right:0}
+.step .n{font-size:12px;font-weight:700;color:var(--blue);letter-spacing:.1em;margin-bottom:14px}
+.step h4{margin-bottom:9px}
+.step p{font-size:15px;line-height:1.55}
+@media(max-width:620px){.step{border-right:0;border-bottom:1px solid var(--rule);padding-right:0}}
+
+/* progress rows */
+.rows{display:flex;flex-direction:column;gap:30px}
+.row{background:var(--surface);border:1px solid var(--rule);border-radius:16px;padding:24px 26px}
+.rowhead{display:flex;align-items:center;gap:14px}
+.rowdesc{font-size:15px;margin:8px 0 18px;max-width:78ch}
+.chip{font-size:11.5px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;padding:4px 11px;border-radius:999px}
+.chip.g{background:var(--green-f);color:var(--green)}
+.chip.b{background:var(--blue-f);color:var(--blue)}
+.chip.a{background:var(--amber-f);color:var(--amber)}
+.track{height:13px;border-radius:999px;background:#ece7de;overflow:hidden}
+.fill{height:100%;border-radius:999px}
+.fill.g{background:var(--green)}.fill.b{background:var(--blue)}.fill.a{background:transparent}
+.repo{display:inline-block;margin-left:14px;font-size:13.5px;color:var(--blue);
+ text-decoration:none;border-bottom:1px solid var(--blue-l);padding-bottom:1px}
+.repo:hover{border-color:var(--blue)}
+.rowfoot{display:flex;justify-content:space-between;font-size:13.5px;color:var(--mute);margin-top:9px}
+
+.figure{background:var(--surface);border:1px solid var(--rule);border-radius:18px;padding:26px}
+.figcap{font-size:13.5px;color:var(--mute);margin-top:14px;text-align:center}
+.scrollx{overflow-x:auto}
+.scrollx>svg{min-width:720px}
+
+footer{border-top:1px solid var(--rule);padding:62px 0 70px}
+.fgrid{display:flex;justify-content:space-between;gap:40px;flex-wrap:wrap}
+.fgrid a{color:var(--ink);text-decoration:none;border-bottom:1px solid var(--rule)}
+</style></head><body>
+
+<nav><div class="wrap">
+  <a class="brand" href="#top"><span class="mark">P</span> PACT</a>
+  <div class="navlinks">
+    <a href="#problem">Problem</a><a href="#how">How it works</a><a href="#progress">Progress</a>
+    <a href="#timeline">Timeline</a><a href="#method">Method</a><a href="#help">Collaborate</a>
+  </div>
+</div></nav>
+
+<div id="top" class="wrap hero">
+  <div class="eyebrow">Human Rights Foundation · Bitcoin Development Fund</div>
+  <h1>Recording what you control, without revealing that you control it.</h1>
+  <p class="lede">About a third of Bitcoin's supply sits at addresses whose public keys are already visible on the chain. PACT lets those holders record control of an address now, with no transaction, without naming the address, and without telling anyone they hold anything at all.</p>
+  <div class="cta">
+    <a class="btn primary" href="https://github.com/ahmedrazaumer1/pact-pool">Read the code</a>
+    <a class="btn" href="PACT_Programme_Overview_HRF.pdf">Programme overview (PDF)</a>
+    <a class="btn" href="#progress">What is built</a>
+    <a class="btn" href="#help">Collaborate</a>
+  </div>
+  <div class="chips">
+    <div class="chip-s"><b>40%</b><span>of the funded scope delivered before the grant round opens</span></div>
+    <div class="chip-s"><b>180</b><span>automated checks and conformance vectors, all passing offline</span></div>
+    <div class="chip-s"><b>MIT</b><span>fully open source, specified so others can reimplement it</span></div>
+  </div>
+</div>
+
+<section id="problem"><div class="wrap">
+  <div class="shead"><div class="eyebrow">The problem</div>
+    <h2>The holders most exposed are the ones least able to act.</h2>
+    <p class="lede">A protocol change that disables spending from exposed-key addresses would require every affected holder to have recorded control in advance. Recording it afterwards is precisely what the change prevents.</p></div>
+  <div class="g3">
+    <div class="card"><h3>The exposure</h3><p>A public key becomes visible the first time an address spends, and for some older address types it was never hidden. Those keys are what a sufficiently capable future adversary would attack, and the coins behind them cannot be made private again.</p></div>
+    <div class="card"><h3>The trap</h3><p>The obvious way to record control is to move the coins to a safer address. That is a public, permanent, attributable transaction. For anyone whose safety rests on nobody knowing what they hold, the remedy is worse than the risk.</p></div>
+    <div class="card"><h3>Who it reaches</h3><p>Holders in jurisdictions where owning Bitcoin is dangerous, and large self-custodied holders whose cost of acting rises with the size of what they hold. Both are deterred from protecting themselves by the act of protection.</p></div>
+  </div>
+</div></section>
+
+<section id="how"><div class="wrap">
+  <div class="shead"><div class="eyebrow">How it works</div>
+    <h2>Four steps, and nothing leaves the holder's machine but a hash.</h2></div>
+  <div class="steps">
+    <div class="step"><div class="n">01</div><h4>Prove control privately</h4><p>The holder signs a message with the key that controls the address. The signature never leaves their machine and no transaction is broadcast.</p></div>
+    <div class="step"><div class="n">02</div><h4>Collapse it to a commitment</h4><p>The signature and a random salt are hashed into a single 32-byte value. It reveals nothing about the address, the balance, or the holder.</p></div>
+    <div class="step"><div class="n">03</div><h4>Timestamp among many</h4><p>A pool batches commitments from many holders into one Merkle tree and anchors a single root in the Bitcoin chain, so no individual submission is visible.</p></div>
+    <div class="step"><div class="n">04</div><h4>Open it only if needed</h4><p>If a recovery path is ever opened, the holder reveals the original values and the timestamped record stands. Until then, they have disclosed nothing.</p></div>
+  </div>
+</div></section>
+
+<section id="progress"><div class="wrap">
+  <div class="shead"><div class="eyebrow">Progress</div>
+    <h2>Five funded deliverables. Three complete or materially under way.</h2>
+    <p class="lede">Bar length is each deliverable's share of the funded budget; the filled portion is what is finished. Weights are those submitted on the application form.</p></div>
+  <div class="rows"><div class="row">
+      <div class="rowhead"><h4>Pooling service</h4><a class="repo" href="https://github.com/ahmedrazaumer1/pact-pool">github.com/ahmedrazaumer1/pact-pool &#8599;</a><span class="chip b">In build</span></div>
+      <p class="rowdesc">Aggregates commitments from many holders, batches them into one Merkle tree and anchors a single root.</p>
+      <div class="track" style="width:100.0%"><div class="fill b" style="width:46.0%"></div></div>
+      <div class="rowfoot"><span>50% of budget</span><span>23 of 50 points delivered</span></div>
+    </div><div class="row">
+      <div class="rowhead"><h4>Holder tool v1.0</h4><span class="chip a">Scheduled</span></div>
+      <p class="rowdesc">The program an individual holder runs: guided, validated, reproducible on three platforms.</p>
+      <div class="track" style="width:46.0%"><div class="fill a" style="width:0.0%"></div></div>
+      <div class="rowfoot"><span>23% of budget</span><span>0 of 23 points delivered</span></div>
+    </div><div class="row">
+      <div class="rowhead"><h4>Threat model</h4><a class="repo" href="https://github.com/ahmedrazaumer1/pact-commit/blob/main/THREAT_MODEL.md">Read it &#8599;</a><span class="chip g">Delivered</span></div>
+      <p class="rowdesc">What the scheme protects against, what it does not, and every assumption it rests on.</p>
+      <div class="track" style="width:20.0%"><div class="fill g" style="width:100.0%"></div></div>
+      <div class="rowfoot"><span>10% of budget</span><span>10 of 10 points delivered</span></div>
+    </div><div class="row">
+      <div class="rowhead"><h4>Security documentation</h4><span class="chip a">Scheduled</span></div>
+      <p class="rowdesc">Operational guidance for non-technical holders, written to be translated.</p>
+      <div class="track" style="width:20.0%"><div class="fill a" style="width:0.0%"></div></div>
+      <div class="rowfoot"><span>10% of budget</span><span>0 of 10 points delivered</span></div>
+    </div><div class="row">
+      <div class="rowhead"><h4>Conformance suite</h4><a class="repo" href="https://github.com/ahmedrazaumer1/pact-commit/tree/main/vectors">Browse the vectors &#8599;</a><span class="chip g">Delivered</span></div>
+      <p class="rowdesc">Test vectors so any independent implementation can be checked against the reference.</p>
+      <div class="track" style="width:14.0%"><div class="fill g" style="width:100.0%"></div></div>
+      <div class="rowfoot"><span>7% of budget</span><span>7 of 7 points delivered</span></div>
+    </div></div>
+  <div class="figure" style="margin-top:46px">
+    <div class="scrollx"><svg viewBox="40 50 1320 800" width="100%" style="height:auto;display:block" xmlns="http://www.w3.org/2000/svg"><path d="M700,450 Q718.0,334.5 700,255" stroke="#2f5fb3" stroke-width="3" fill="none" opacity=".55"/><path d="M700,255 Q609.6656397448244,177.71717253382104 519,100" stroke="#adf0c7" stroke-width="2.5" fill="none"/><path d="M700,255 Q790.3343602551756,177.71717253382104 881,100" stroke="#c6dcff" stroke-width="2.5" fill="none"/><path d="M700,450 Q849.6737746810641,401.8708430484426 963,390" stroke="#a8550b" stroke-width="3" fill="none" opacity=".55"/><path d="M963,390 Q1039.8031749236713,305.35780863787016 1116,221" stroke="#e4e0d9" stroke-width="2.5" fill="none"/><path d="M963,390 Q1095.6328799133476,426.36214943510777 1228,463" stroke="#e4e0d9" stroke-width="2.5" fill="none"/><path d="M700,450 Q799.3788681798928,510.87915695155743 863,608" stroke="#0a7a35" stroke-width="3" fill="none" opacity=".55"/><path d="M863,608 Q1000.3442718431304,632.8890369971164 1138,658" stroke="#adf0c7" stroke-width="2.5" fill="none"/><path d="M863,608 Q854.1802065982788,707.6738323960847 846,808" stroke="#c6dcff" stroke-width="2.5" fill="none"/><path d="M700,450 Q636.6211318201072,510.87915695155743 537,608" stroke="#a8550b" stroke-width="3" fill="none" opacity=".55"/><path d="M537,608 Q545.8197934017213,707.6738323960847 554,808" stroke="#e4e0d9" stroke-width="2.5" fill="none"/><path d="M537,608 Q399.6557281568695,632.8890369971164 262,658" stroke="#e4e0d9" stroke-width="2.5" fill="none"/><path d="M700,450 Q586.3262253189359,401.8708430484427 437,390" stroke="#0a7a35" stroke-width="3" fill="none" opacity=".55"/><path d="M437,390 Q304.3671200866524,426.3621494351079 172,463" stroke="#adf0c7" stroke-width="2.5" fill="none"/><path d="M437,390 Q360.19682507632854,305.3578086378702 284,221" stroke="#adf0c7" stroke-width="2.5" fill="none"/><circle cx="700" cy="450" r="96" fill="#f0f5fd"/><circle cx="700" cy="450" r="72" fill="#2f5fb3"/><text x="700" y="459" text-anchor="middle" font-size="27" font-weight="700" fill="#fff">PACT</text><rect x="576" y="220" width="248" height="70" rx="10" fill="#c6dcff" stroke="#2f5fb3" stroke-width="2"/><text x="700" y="249" text-anchor="middle" font-size="16.5" font-weight="700" fill="#2f5fb3">Pooling service</text><text x="700" y="271" text-anchor="middle" font-size="12.5" fill="#2f5fb3">50% of budget · core built</text><rect x="412" y="76" width="214" height="48" rx="8" fill="#eaf9ef" stroke="#adf0c7" stroke-width="1.5"/><text x="519" y="96" text-anchor="middle" font-size="11.5" fill="#0a7a35">Batching and inclusion</text><text x="519" y="112" text-anchor="middle" font-size="11.5" fill="#0a7a35">proofs</text><rect x="774" y="76" width="214" height="48" rx="8" fill="#f0f5fd" stroke="#c6dcff" stroke-width="1.5"/><text x="881" y="96" text-anchor="middle" font-size="11.5" fill="#2f5fb3">Durability and</text><text x="881" y="112" text-anchor="middle" font-size="11.5" fill="#2f5fb3">supervision</text><rect x="839" y="355" width="248" height="70" rx="10" fill="#fff5ed" stroke="#f8d3af" stroke-width="2"/><text x="963" y="384" text-anchor="middle" font-size="16.5" font-weight="700" fill="#a8550b">Holder tool v1.0</text><text x="963" y="406" text-anchor="middle" font-size="12.5" fill="#a8550b">23% of budget · scheduled</text><rect x="1009" y="197" width="214" height="48" rx="8" fill="#ffffff" stroke="#e4e0d9" stroke-width="1.5"/><text x="1116" y="217" text-anchor="middle" font-size="11.5" fill="#5b6068">Guided flow, no command</text><text x="1116" y="233" text-anchor="middle" font-size="11.5" fill="#5b6068">line</text><rect x="1121" y="439" width="214" height="48" rx="8" fill="#ffffff" stroke="#e4e0d9" stroke-width="1.5"/><text x="1228" y="459" text-anchor="middle" font-size="11.5" fill="#5b6068">Reproducible on three</text><text x="1228" y="475" text-anchor="middle" font-size="11.5" fill="#5b6068">platforms</text><rect x="739" y="573" width="248" height="70" rx="10" fill="#adf0c7" stroke="#0a7a35" stroke-width="2"/><text x="863" y="602" text-anchor="middle" font-size="16.5" font-weight="700" fill="#0a7a35">Threat model</text><text x="863" y="624" text-anchor="middle" font-size="12.5" fill="#0a7a35">10% of budget · published</text><rect x="1031" y="634" width="214" height="48" rx="8" fill="#eaf9ef" stroke="#adf0c7" stroke-width="1.5"/><text x="1138" y="654" text-anchor="middle" font-size="11.5" fill="#0a7a35">What it protects, what</text><text x="1138" y="670" text-anchor="middle" font-size="11.5" fill="#0a7a35">it does not</text><rect x="739" y="784" width="214" height="48" rx="8" fill="#f0f5fd" stroke="#c6dcff" stroke-width="1.5"/><text x="846" y="804" text-anchor="middle" font-size="11.5" fill="#2f5fb3">Independent review,</text><text x="846" y="820" text-anchor="middle" font-size="11.5" fill="#2f5fb3">month 8</text><rect x="413" y="573" width="248" height="70" rx="10" fill="#fff5ed" stroke="#f8d3af" stroke-width="2"/><text x="537" y="602" text-anchor="middle" font-size="16.5" font-weight="700" fill="#a8550b">Security documentation</text><text x="537" y="624" text-anchor="middle" font-size="12.5" fill="#a8550b">10% of budget · scheduled</text><rect x="447" y="793" width="214" height="30" rx="8" fill="#ffffff" stroke="#e4e0d9" stroke-width="1.5"/><text x="554" y="812" text-anchor="middle" font-size="11.5" fill="#5b6068">Written to be translated</text><rect x="155" y="634" width="214" height="48" rx="8" fill="#ffffff" stroke="#e4e0d9" stroke-width="1.5"/><text x="262" y="654" text-anchor="middle" font-size="11.5" fill="#5b6068">For holders under</text><text x="262" y="670" text-anchor="middle" font-size="11.5" fill="#5b6068">surveillance</text><rect x="313" y="355" width="248" height="70" rx="10" fill="#adf0c7" stroke="#0a7a35" stroke-width="2"/><text x="437" y="384" text-anchor="middle" font-size="16.5" font-weight="700" fill="#0a7a35">Conformance suite</text><text x="437" y="406" text-anchor="middle" font-size="12.5" fill="#0a7a35">7% of budget · published</text><rect x="65" y="439" width="214" height="48" rx="8" fill="#eaf9ef" stroke="#adf0c7" stroke-width="1.5"/><text x="172" y="459" text-anchor="middle" font-size="11.5" fill="#0a7a35">26 vectors,</text><text x="172" y="475" text-anchor="middle" font-size="11.5" fill="#0a7a35">independently derived</text><rect x="177" y="197" width="214" height="48" rx="8" fill="#eaf9ef" stroke="#adf0c7" stroke-width="1.5"/><text x="284" y="217" text-anchor="middle" font-size="11.5" fill="#0a7a35">Two implementations</text><text x="284" y="233" text-anchor="middle" font-size="11.5" fill="#0a7a35">agree</text></svg></div>
+    <div class="figcap">The programme at a glance. Green is delivered, blue is in build, amber is funded and scheduled.</div>
+  </div>
+</div></section>
+
+<section id="timeline"><div class="wrap">
+  <div class="shead"><div class="eyebrow">Delivery</div>
+    <h2>Two build tracks in parallel, with assurance following the work it reviews.</h2>
+    <p class="lede">Months run from grant start. Diamonds mark the three success measures committed to on the application.</p></div>
+  <div class="figure"><div class="scrollx"><svg viewBox="0 0 1400 440" width="100%" style="height:auto;display:block" xmlns="http://www.w3.org/2000/svg"><text x="190" y="26" text-anchor="middle" font-size="12.5" font-weight="700" fill="#a9a49b">M0</text><text x="384" y="26" text-anchor="middle" font-size="12.5" font-weight="700" fill="#a9a49b">M2</text><line x1="384" y1="44" x2="384" y2="330" stroke="#e4e0d9" stroke-width="1.5"/><text x="578" y="26" text-anchor="middle" font-size="12.5" font-weight="700" fill="#a9a49b">M4</text><line x1="578" y1="44" x2="578" y2="330" stroke="#e4e0d9" stroke-width="1.5"/><text x="772" y="26" text-anchor="middle" font-size="12.5" font-weight="700" fill="#a9a49b">M6</text><line x1="772" y1="44" x2="772" y2="330" stroke="#e4e0d9" stroke-width="1.5"/><text x="967" y="26" text-anchor="middle" font-size="12.5" font-weight="700" fill="#a9a49b">M8</text><line x1="967" y1="44" x2="967" y2="330" stroke="#e4e0d9" stroke-width="1.5"/><text x="1161" y="26" text-anchor="middle" font-size="12.5" font-weight="700" fill="#a9a49b">M10</text><line x1="1161" y1="44" x2="1161" y2="330" stroke="#e4e0d9" stroke-width="1.5"/><text x="1355" y="26" text-anchor="middle" font-size="12.5" font-weight="700" fill="#a9a49b">M12</text><line x1="1355" y1="44" x2="1355" y2="330" stroke="#e4e0d9" stroke-width="1.5"/><line x1="0" y1="42" x2="1400" y2="42" stroke="#a9a49b" stroke-width="1.5"/><text x="0" y="94" font-size="13.5" font-weight="700" fill="#16181d">Pooling service</text><rect x="190" y="64" width="97" height="46" rx="9" fill="#2f5fb3"/><text x="239" y="93" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">A · Validate</text><rect x="287" y="64" width="485" height="46" rx="9" fill="#2f5fb3"/><text x="530" y="93" text-anchor="middle" font-size="14" font-weight="700" fill="#fff">B · Production hardening</text><text x="0" y="160" font-size="13.5" font-weight="700" fill="#16181d">Assurance</text><rect x="675" y="130" width="291" height="46" rx="9" fill="#2f5fb3"/><text x="821" y="159" text-anchor="middle" font-size="14" font-weight="700" fill="#fff">C · Independent security review</text><text x="0" y="226" font-size="13.5" font-weight="700" fill="#16181d">Holder tool</text><rect x="384" y="196" width="680" height="46" rx="9" fill="#d97b1f"/><text x="724" y="225" text-anchor="middle" font-size="14" font-weight="700" fill="#fff">D · Holder tool v1.0</text><text x="0" y="292" font-size="13.5" font-weight="700" fill="#16181d">Documentation</text><rect x="967" y="262" width="291" height="46" rx="9" fill="#d97b1f"/><text x="1112" y="291" text-anchor="middle" font-size="14" font-weight="700" fill="#fff">E · Operational security guidance</text><line x1="772" y1="330" x2="772" y2="339" stroke="#0a7a35" stroke-width="1.5"/><polygon points="772,339 792,358 772,377 754,358" fill="#0a7a35"/><text x="772" y="364" text-anchor="middle" font-size="15" font-weight="700" fill="#fff">1</text><line x1="967" y1="330" x2="967" y2="339" stroke="#0a7a35" stroke-width="1.5"/><polygon points="967,339 986,358 967,377 948,358" fill="#0a7a35"/><text x="967" y="364" text-anchor="middle" font-size="15" font-weight="700" fill="#fff">2</text><line x1="1064" y1="330" x2="1064" y2="339" stroke="#0a7a35" stroke-width="1.5"/><polygon points="1064,339 1083,358 1064,377 1045,358" fill="#0a7a35"/><text x="1064" y="364" text-anchor="middle" font-size="15" font-weight="700" fill="#fff">3</text><text x="772" y="406" text-anchor="middle" font-size="12.5" font-weight="700" fill="#0a7a35">Measure 1</text><text x="951" y="406" text-anchor="end" font-size="12.5" font-weight="700" fill="#0a7a35">Measure 2</text><text x="1080" y="406" text-anchor="start" font-size="12.5" font-weight="700" fill="#0a7a35">Measure 3</text></svg></div></div>
+  <div class="g3" style="margin-top:34px">
+    <div class="card g"><span class="k g">Measure 1 · Month 6</span><h4>Pooling service published, running, and reproducible from source by an independent party</h4>
+      <p>Three conditions. Published is a release. Running means an unbroken sequence of sealed intervals a reader can inspect. Independently reproducible means someone who is not the author rebuilds from source and obtains the same artefact.</p></div>
+    <div class="card g"><span class="k g">Measure 2 · Month 8</span><h4>Threat model published and reviewed by at least two outside reviewers with security expertise</h4>
+      <p>The document is written and published. The measure's weight sits in the review: a threat model is an argument rather than a measurement, so it cannot be self-certified, and the author is the last person able to judge whether it is complete.</p></div>
+    <div class="card g"><span class="k g">Measure 3 · At release</span><h4>Holder tool v1.0 released after usability testing with at least five non-technical testers</h4>
+      <p>With the failure modes found and fixed documented. The record has to show what testers got wrong and what changed because of it, which is what makes the result useful to anyone building something similar.</p></div>
+  </div>
+</div></section>
+
+<section id="method"><div class="wrap">
+  <div class="shead"><div class="eyebrow">Method</div>
+    <h2>How progress is verified.</h2>
+    <p class="lede">A grant is a claim about the future, so the thing worth offering is a record of how claims get checked. Three practices carried through every stage of the work so far.</p></div>
+  <div class="g3">
+    <div class="card b"><div class="num">01</div><h3>Every claim traces to an artefact</h3>
+      <p>A harness checks the project's written claims against the files and test results that support them, and fails the build when a document says something the evidence does not. Figures that go stale are caught rather than quietly carried forward.</p>
+      <div class="ev">Runs on every change, and fails the build</div></div>
+    <div class="card b"><div class="num">02</div><h3>Specification before implementation</h3>
+      <p>The commitment format is pinned by conformance vectors derived independently of the code that implements it, so an outside developer can check their own build against the reference rather than taking it on trust.</p>
+      <div class="ev"><a href="https://github.com/ahmedrazaumer1/pact-commit/blob/main/SPEC.md" style="color:inherit">Read the specification &#8599;</a></div></div>
+    <div class="card b"><div class="num">03</div><h3>Independent review before release</h3>
+      <p>Finished components are handed to an independent reviewer briefed to test them rather than confirm them. Nothing is released until every finding is closed and covered by a regression test that holds it closed.</p>
+      <div class="ev">Every finding closed and regression-tested</div></div>
+  </div>
+</div></section>
+
+<section id="help"><div class="wrap">
+  <div class="shead"><div class="eyebrow">Collaboration</div>
+    <h2>Where a network multiplies the grant.</h2>
+    <p class="lede">Four steps need people rather than engineering time, and two of them are written into the success measures. Introductions would move these faster than funding alone.</p></div>
+  <div class="g4">
+    <div class="card b"><span class="k b">Measure 2 · Month 8</span><h4>Two security reviewers</h4><p>With relevant expertise, outside the project. A threat model cannot be tested into correctness.</p></div>
+    <div class="card b"><span class="k b">Measure 1 · Month 6</span><h4>One independent engineer</h4><p>To rebuild the pooling service from source and confirm the artefact matches.</p></div>
+    <div class="card a"><span class="k a">Measure 3 · At release</span><h4>Five non-technical holders</h4><p>For observed usability testing of the holder tool, with every point of confusion recorded.</p></div>
+    <div class="card a"><span class="k a">Deliverable 4</span><h4>One field practitioner</h4><p>Who supports users living under surveillance, to review the operational guidance.</p></div>
+  </div>
+</div></section>
+
+<footer><div class="wrap fgrid">
+  <div style="max-width:46ch"><div class="brand" style="margin-bottom:14px"><span class="mark">P</span> PACT</div>
+    <p style="font-size:15px">Independent research and open-source software, MIT licensed. Prepared for the Human Rights Foundation Bitcoin Development Fund.</p></div>
+  <div style="font-size:15px;line-height:2">
+    <div><a href="https://github.com/ahmedrazaumer1/pact-pool">pact-pool on GitHub</a></div>
+    <div><a href="https://github.com/ahmedrazaumer1/pact-commit">pact-commit on GitHub</a></div>
+    <div><a href="PACT_Programme_Overview_HRF.pdf">Programme overview (PDF)</a></div>
+    <div class="muted">Ahmed Raza Muhammad Umer · Riyadh</div>
+    <div class="muted">Last updated 5 November 2026</div>
+  </div>
+</div></footer>
+</body></html>
