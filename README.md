@@ -3,7 +3,7 @@
 The public programme page for PACT, served by GitHub Pages from this repository.
 
 - `index.html` — the page. Self-contained: no external requests, no dependencies, no tracking.
-- `PACT_Programme_Overview_HRF.pdf` — the same material as a four-page document, for attaching to email.
+- `PACT_Programme_Overview.pdf` — the same material as a four-page document, for attaching to email.
 - `.nojekyll` — tells GitHub Pages to serve the files as they are.
 
 The software this page describes lives in
